@@ -15,6 +15,7 @@ class AvataaarGenerator extends StatelessWidget {
     void Function() onTap,
     String currentSelected,
     String type,
+    String icon,
   )? sectionBuilder;
 
   AvataaarGenerator({
@@ -401,6 +402,7 @@ class AvataaarGenerator extends StatelessWidget {
         onTap,
         currentSelected,
         type,
+        icon,
       );
     }
     return Row(
