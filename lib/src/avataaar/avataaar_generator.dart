@@ -16,6 +16,7 @@ class AvataaarGenerator extends StatelessWidget {
     String currentSelected,
     String type,
     String icon,
+    ValueChanged<int> onUpdate,
   )? sectionBuilder;
 
   AvataaarGenerator({
@@ -93,28 +94,31 @@ class AvataaarGenerator extends StatelessWidget {
                 ),
                 //TopType
                 typeBuilder(
-                  context,
-                  () {
-                    showMaterialScrollPicker<TopType>(
-                      context: context,
-                      title: onTranslateKey('top'),
-                      transformer: (item) => onTranslateKey(
-                        topTypeNames[item.index],
-                      ),
-                      items: TopType.values,
-                      selectedItem: avataaar.top.topType,
-                      onChanged: (value) {
-                        avataaar.top.topType = value;
-                        onUpdateAvataaar?.call();
-                      },
-                    );
-                  },
-                  onTranslateKey(
-                    topTypeNames[avataaar.top.topType.index],
-                  ),
-                  onTranslateKey('top'),
-                  'cowboy_hat',
-                ),
+                    context,
+                    () {
+                      showMaterialScrollPicker<TopType>(
+                        context: context,
+                        title: onTranslateKey('top'),
+                        transformer: (item) => onTranslateKey(
+                          topTypeNames[item.index],
+                        ),
+                        items: TopType.values,
+                        selectedItem: avataaar.top.topType,
+                        onChanged: (value) {
+                          avataaar.top.topType = value;
+                          onUpdateAvataaar?.call();
+                        },
+                      );
+                    },
+                    onTranslateKey(
+                      topTypeNames[avataaar.top.topType.index],
+                    ),
+                    onTranslateKey('top'),
+                    'cowboy_hat',
+                    (index) {
+                      avataaar.top.topType = TopType.values[index];
+                      onUpdateAvataaar?.call();
+                    }),
                 //HairColor
                 if (!(avataaar.top.topType == TopType.noHair ||
                     avataaar.top.topType == TopType.eyepatch ||
@@ -147,6 +151,10 @@ class AvataaarGenerator extends StatelessWidget {
                         hairColorNames[avataaar.top.hairColor.index]),
                     onTranslateKey('hair_color'),
                     'hair_color',
+                    (index) {
+                      avataaar.top.hairColor = HairColor.values[index];
+                      onUpdateAvataaar?.call();
+                    },
                   ),
 
                 //HatColor
@@ -175,6 +183,10 @@ class AvataaarGenerator extends StatelessWidget {
                     onTranslateKey(hatColorNames[avataaar.top.hatColor.index]),
                     onTranslateKey('hat_color'),
                     'cowboy_hat_color',
+                    (index) {
+                      avataaar.top.hatColor = HatColor.values[index];
+                      onUpdateAvataaar?.call();
+                    },
                   ),
 
                 //AccessoriesType
@@ -198,6 +210,11 @@ class AvataaarGenerator extends StatelessWidget {
                         avataaar.top.accessoriesType.index]),
                     onTranslateKey('accessories'),
                     'bowtie',
+                    (index) {
+                      avataaar.top.accessoriesType =
+                          AccessoriesType.values[index];
+                      onUpdateAvataaar?.call();
+                    },
                   ),
                 //FacialHairType
                 if (avataaar.top.topType != TopType.hijab)
@@ -221,6 +238,11 @@ class AvataaarGenerator extends StatelessWidget {
                         avataaar.top.facialHair.facialHairType.index]),
                     onTranslateKey('facial_hair_type'),
                     'beard',
+                    (index) {
+                      avataaar.top.facialHair.facialHairType =
+                          FacialHairType.values[index];
+                      onUpdateAvataaar?.call();
+                    },
                   ),
                 //FacialHairColor
                 if (avataaar.top.topType != TopType.hijab &&
@@ -246,6 +268,11 @@ class AvataaarGenerator extends StatelessWidget {
                         avataaar.top.facialHair.facialHairColor.index]),
                     onTranslateKey('facial_hair_color'),
                     'beard_color',
+                    (index) {
+                      avataaar.top.facialHair.facialHairColor =
+                          FacialHairColor.values[index];
+                      onUpdateAvataaar?.call();
+                    },
                   ),
 
                 //ClotheType
@@ -269,6 +296,10 @@ class AvataaarGenerator extends StatelessWidget {
                       clotheTypeNames[avataaar.clothes.clotheType.index]),
                   onTranslateKey('clothes_type'),
                   'hawaiian-shirt',
+                  (index) {
+                    avataaar.clothes.clotheType = ClotheType.values[index];
+                    onUpdateAvataaar?.call();
+                  },
                 ),
                 //ClotheColor
                 if (!(avataaar.clothes.clotheType == ClotheType.blazerShirt ||
@@ -293,6 +324,10 @@ class AvataaarGenerator extends StatelessWidget {
                         clotheColorNames[avataaar.clothes.clotheColor.index]),
                     onTranslateKey('clothes_color'),
                     'hawaiian-shirt_color',
+                    (index) {
+                      avataaar.clothes.clotheColor = ClotheColor.values[index];
+                      onUpdateAvataaar?.call();
+                    },
                   ),
                 //Eyes
                 typeBuilder(
@@ -314,6 +349,10 @@ class AvataaarGenerator extends StatelessWidget {
                   onTranslateKey(eyeTypeNames[avataaar.eyes.eyeType.index]),
                   onTranslateKey('eyes'),
                   'eye',
+                  (index) {
+                    avataaar.eyes.eyeType = EyeType.values[index];
+                    onUpdateAvataaar?.call();
+                  },
                 ),
                 //EyesBrown
                 typeBuilder(
@@ -336,6 +375,10 @@ class AvataaarGenerator extends StatelessWidget {
                       eyebrowTypeNames[avataaar.eyebrow.eyebrowType.index]),
                   onTranslateKey('eyebrow'),
                   'eyebrows',
+                  (index) {
+                    avataaar.eyebrow.eyebrowType = EyebrowType.values[index];
+                    onUpdateAvataaar?.call();
+                  },
                 ),
                 //Mouth
                 typeBuilder(
@@ -358,6 +401,10 @@ class AvataaarGenerator extends StatelessWidget {
                       mouthTypeNames[avataaar.mouth.mouthType.index]),
                   onTranslateKey('mouth'),
                   'mouth',
+                  (index) {
+                    avataaar.mouth.mouthType = MouthType.values[index];
+                    onUpdateAvataaar?.call();
+                  },
                 ),
                 //Skin
                 typeBuilder(
@@ -379,6 +426,10 @@ class AvataaarGenerator extends StatelessWidget {
                   onTranslateKey(skinColorNames[avataaar.skin.skinColor.index]),
                   onTranslateKey('skin'),
                   'wheel',
+                  (index) {
+                    avataaar.skin.skinColor = SkinColor.values[index];
+                    onUpdateAvataaar?.call();
+                  },
                 ),
               ],
             ),
@@ -395,15 +446,11 @@ class AvataaarGenerator extends StatelessWidget {
     String currentSelected,
     String type,
     String icon,
+    ValueChanged<int> onUpdate,
   ) {
     if (sectionBuilder != null) {
       return sectionBuilder!(
-        context,
-        onTap,
-        currentSelected,
-        type,
-        icon,
-      );
+          context, onTap, currentSelected, type, icon, onUpdate);
     }
     return Row(
       children: [
