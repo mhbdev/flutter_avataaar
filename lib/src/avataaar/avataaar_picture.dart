@@ -80,3 +80,73 @@ class AvataaarPicture extends StatelessWidget {
     }
   }
 }
+
+
+class AvatarPicture extends StatelessWidget {
+  final Widget Function(BuildContext context, String avataaar)? customBuilder;
+  final String url;
+  final Widget? placeholder;
+  final Widget? errorWidget;
+  final void Function(Exception exception)? onError;
+
+  const AvatarPicture.builder({
+    Key? key,
+    this.customBuilder,
+    this.placeholder,
+    this.errorWidget,
+    this.onError,
+    required this.url,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return customBuilder?.call(context, url) ??
+        FutureBuilder<String>(
+          future: fetchSvg(url),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              var string = snapshot.data!;
+
+              return SvgPicture.string(
+                string,
+                placeholderBuilder: (context) => placeholder ?? const CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return errorWidget ??
+                  const Icon(
+                    Icons.error,
+                  );
+            } else {
+              return Center(
+                child: placeholder ?? const CircularProgressIndicator(),
+              );
+            }
+          },
+        );
+  }
+
+  ///Easiest way to fetch the SVG doing HTTP request
+  Future<String> fetchSvg(String url) async {
+    try {
+      if (Avataaar.cachedUrls.containsKey(url)) {
+        return Avataaar.cachedUrls[url]!;
+      }
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        // If the server did return a 200 OK response,
+        // then save it and parse the JSON.
+        Avataaar.cachedUrls.putIfAbsent(url, () => response.body);
+        return response.body;
+      } else {
+        // If the server did not return a 200 OK response,
+        // then throw an exception.
+        onError?.call(Exception('Failed to load SVG'));
+        throw Exception('Failed to load SVG');
+      }
+    } on Exception catch (e) {
+      onError?.call(e);
+      rethrow;
+    }
+  }
+}
