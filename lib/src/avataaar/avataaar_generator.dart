@@ -10,6 +10,7 @@ class AvataaarGenerator extends StatelessWidget {
   final void Function()? onUpdateAvataaar;
   final void Function(Exception exception)? onError;
   final List<Color> colors;
+  final bool askForBackgroundColor;
   final Widget Function(
     BuildContext context,
     int index,
@@ -30,6 +31,7 @@ class AvataaarGenerator extends StatelessWidget {
     this.onError,
     this.colors = Avataaar.defaultBackgroundColors,
     this.sectionBuilder,
+    this.askForBackgroundColor = true,
   }) : super(key: key);
 
   @override
@@ -52,48 +54,49 @@ class AvataaarGenerator extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  height: 50.0,
-                  padding: EdgeInsets.all(4.0),
-                  child: ListView.separated(
-                      shrinkWrap: true,
-                      separatorBuilder: (context, index) => const SizedBox(
-                            width: 8.0,
-                          ),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: colors.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () {
-                            avataaar.backgroundColor = colors[index];
-                            onUpdateAvataaar?.call();
-                          },
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(4.0),
-                                decoration: BoxDecoration(
-                                  color: colors[index],
-                                  shape: BoxShape.circle,
-                                ),
-                                width: 32.0,
-                              ),
-                              if (avataaar.backgroundColor == colors[index])
-                                Transform.translate(
-                                  offset: Offset(0.0, -20.0),
-                                  child: Icon(
-                                    Icons.arrow_drop_down,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    size: 32.0,
+                if (askForBackgroundColor)
+                  Container(
+                    height: 50.0,
+                    padding: EdgeInsets.all(4.0),
+                    child: ListView.separated(
+                        shrinkWrap: true,
+                        separatorBuilder: (context, index) => const SizedBox(
+                              width: 8.0,
+                            ),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: colors.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: () {
+                              avataaar.backgroundColor = colors[index];
+                              onUpdateAvataaar?.call();
+                            },
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    color: colors[index],
+                                    shape: BoxShape.circle,
                                   ),
+                                  width: 32.0,
                                 ),
-                            ],
-                          ),
-                        );
-                      }),
-                ),
+                                if (avataaar.backgroundColor == colors[index])
+                                  Transform.translate(
+                                    offset: Offset(0.0, -20.0),
+                                    child: Icon(
+                                      Icons.arrow_drop_down,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      size: 32.0,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          );
+                        }),
+                  ),
                 //TopType
                 typeBuilder(
                     context,
