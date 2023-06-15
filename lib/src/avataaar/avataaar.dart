@@ -3,18 +3,18 @@ library flutter_avataaar;
 import 'dart:convert' show json;
 import 'package:universal_io/io.dart';
 import 'dart:math';
-import 'dart:typed_data';
+// import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_avataaar/flutter_avataaar.dart';
-import 'package:flutter_avataaar/src/helpers/hex_color.dart';
-import 'package:path_provider/path_provider.dart';
+// import 'package:flutter_avataaar/src/helpers/hex_color.dart';
+// import 'package:path_provider/path_provider.dart';
 
-import 'dart:ui';
-import 'package:flutter_svg/flutter_svg.dart';
+// import 'dart:ui';
+// import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:http/http.dart' as http;
-import 'package:uuid/uuid.dart';
+// import 'package:http/http.dart' as http;
+// import 'package:uuid/uuid.dart';
 
 ///Data class of your current avatar.
 ///Can generate a url using [toUrl] function as well as a png from svg [getPngFromSvg]
@@ -126,76 +126,76 @@ class Avataaar implements AvataaarPart {
   /// if background color is set, it will be on the file.
   ///
   /// Throw an [Exception] if it fails
-  Future<File> getPngFromSvg({
-    String? path,
-    String? fileName,
-    double? width,
-    double? height,
-    bool overrideFile = false,
-  }) async {
-    try {
-      // if just one is set, has a square
-      if (width != null || height != null) {
-        width ??= height;
-        height ??= width;
-      }
+  // Future<File> getPngFromSvg({
+  //   String? path,
+  //   String? fileName,
+  //   double? width,
+  //   double? height,
+  //   bool overrideFile = false,
+  // }) async {
+  //   try {
+  //     // if just one is set, has a square
+  //     if (width != null || height != null) {
+  //       width ??= height;
+  //       height ??= width;
+  //     }
 
-      var finalWidth = width ?? 256.0;
-      var finalHeight = height ?? 256.0;
+  //     var finalWidth = width ?? 256.0;
+  //     var finalHeight = height ?? 256.0;
 
-      //getting the svg from server
-      var svgString = cachedUrls.containsKey(toUrl())
-          ? cachedUrls[toUrl()]
-          : await http.get(Uri.parse(toUrl())).then((it) {
-              if (it.statusCode == 200) {
-                cachedUrls.putIfAbsent(toUrl(), () => it.body);
-                return it.body;
-              } else {
-                return null;
-              }
-            });
+  //     //getting the svg from server
+  //     var svgString = cachedUrls.containsKey(toUrl())
+  //         ? cachedUrls[toUrl()]
+  //         : await http.get(Uri.parse(toUrl())).then((it) {
+  //             if (it.statusCode == 200) {
+  //               cachedUrls.putIfAbsent(toUrl(), () => it.body);
+  //               return it.body;
+  //             } else {
+  //               return null;
+  //             }
+  //           });
 
-      if (svgString == null) {
-        throw Exception('Error transforming svg to a png -> $e');
-      }
+  //     if (svgString == null) {
+  //       throw Exception('Error transforming svg to a png -> $e');
+  //     }
 
-      if (backgroundColor != AvataaarsApi.baseBackgroundColor) {
-        svgString = BackgroundColorHelper.getSvgWithBackground(svgString, backgroundColor);
-      }
+  //     if (backgroundColor != AvataaarsApi.baseBackgroundColor) {
+  //       svgString = BackgroundColorHelper.getSvgWithBackground(svgString, backgroundColor);
+  //     }
 
-      var unit8Picture = Uint8List.fromList(svgString.codeUnits);
-      //Produces a [Drawableroot] from a [Uint8List] of SVG byte data (assumes UTF8 encoding).
-      var svgDrawableRoot = await svg.fromSvgBytes(unit8Picture, 'svgToPngAvataaar');
+  //     var unit8Picture = Uint8List.fromList(svgString.codeUnits);
+  //     //Produces a [Drawableroot] from a [Uint8List] of SVG byte data (assumes UTF8 encoding).
+  //     var svgDrawableRoot = await svg (unit8Picture, 'svgToPngAvataaar');
 
-      // Convert to ui.Picture
-      var picture = svgDrawableRoot.toPicture(size: Size(finalWidth, finalHeight));
-      // Convert to ui.Image. toImage() takes width and height as parameters
-      // you need to find the best size to suit your needs and take into account the screen DPI
-      var image = await picture.toImage(finalWidth.toInt(), finalHeight.toInt());
-      var bytes = await image.toByteData(format: ImageByteFormat.png);
+  //     // Convert to ui.Picture
+  //     var picture = svgDrawableRoot.toPicture(size: Size(finalWidth, finalHeight));
+  //     // Convert to ui.Image. toImage() takes width and height as parameters
+  //     // you need to find the best size to suit your needs and take into account the screen DPI
+  //     var image = await picture.toImage(finalWidth.toInt(), finalHeight.toInt());
+  //     var bytes = await image.toByteData(format: ImageByteFormat.png);
 
-      //Saving as a temporary file using a unique string
+  //     //Saving as a temporary file using a unique string
 
-      var file = File('${path ?? (await getTemporaryDirectory()).path}/${fileName ?? Uuid().v4()}.png');
-      if (await file.exists()) {
-        if (overrideFile) {
-          await file.delete();
-        } else {
-          throw Exception('File exists');
-        }
-      }
+  //     var file = File('${path ?? (await getTemporaryDirectory()).path}/${fileName ?? Uuid().v4()}.png');
+  //     if (await file.exists()) {
+  //       if (overrideFile) {
+  //         await file.delete();
+  //       } else {
+  //         throw Exception('File exists');
+  //       }
+  //     }
 
-      await file.writeAsBytes(
-        bytes!.buffer.asUint8List(
-          bytes.offsetInBytes,
-          bytes.lengthInBytes,
-        ),
-      );
-      return file;
-    } on Exception catch (e) {
-      throw Exception('Error transforming svg to a png -> $e');
-    }
-  }
+  //     await file.writeAsBytes(
+  //       bytes!.buffer.asUint8List(
+  //         bytes.offsetInBytes,
+  //         bytes.lengthInBytes,
+  //       ),
+  //     );
+  //     return file;
+  //   } on Exception catch (e) {
+  //     throw Exception('Error transforming svg to a png -> $e');
+  //   }
+  // }
 
   ///Cached urls to avoid multiple request
   static final Map<String, String> cachedUrls = {};
