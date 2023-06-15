@@ -29,6 +29,7 @@ class AvataaarGenerator extends StatelessWidget {
     this.avataaarPicture,
     this.onError,
     this.colors = Avataaar.defaultBackgroundColors,
+    this.sectionBuilder,
   }) : super(key: key);
 
   @override
@@ -83,7 +84,8 @@ class AvataaarGenerator extends StatelessWidget {
                                   offset: Offset(0.0, -20.0),
                                   child: Icon(
                                     Icons.arrow_drop_down,
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                     size: 32.0,
                                   ),
                                 ),
@@ -141,7 +143,8 @@ class AvataaarGenerator extends StatelessWidget {
                       showMaterialScrollPicker<HairColor>(
                         context: context,
                         title: onTranslateKey('hair_color'),
-                        transformer: (item) => onTranslateKey(hairColorNames[item.index]),
+                        transformer: (item) =>
+                            onTranslateKey(hairColorNames[item.index]),
                         items: HairColor.values,
                         selectedItem: avataaar.top.hairColor,
                         onChanged: (value) {
@@ -150,7 +153,8 @@ class AvataaarGenerator extends StatelessWidget {
                         },
                       );
                     },
-                    onTranslateKey(hairColorNames[avataaar.top.hairColor.index]),
+                    onTranslateKey(
+                        hairColorNames[avataaar.top.hairColor.index]),
                     onTranslateKey('hair_color'),
                     'hair_color',
                     (index) {
@@ -174,7 +178,8 @@ class AvataaarGenerator extends StatelessWidget {
                       showMaterialScrollPicker<HatColor>(
                         context: context,
                         title: onTranslateKey('hat_color'),
-                        transformer: (item) => onTranslateKey(hatColorNames[item.index]),
+                        transformer: (item) =>
+                            onTranslateKey(hatColorNames[item.index]),
                         items: HatColor.values,
                         selectedItem: avataaar.top.hatColor,
                         onChanged: (value) {
@@ -203,7 +208,8 @@ class AvataaarGenerator extends StatelessWidget {
                       showMaterialScrollPicker<AccessoriesType>(
                           context: context,
                           title: onTranslateKey('accessories'),
-                          transformer: (item) => onTranslateKey(accessoriesTypeNames[item.index]),
+                          transformer: (item) =>
+                              onTranslateKey(accessoriesTypeNames[item.index]),
                           items: AccessoriesType.values,
                           selectedItem: avataaar.top.accessoriesType,
                           onChanged: (value) {
@@ -211,7 +217,8 @@ class AvataaarGenerator extends StatelessWidget {
                             onUpdateAvataaar?.call();
                           });
                     },
-                    onTranslateKey(accessoriesTypeNames[avataaar.top.accessoriesType.index]),
+                    onTranslateKey(accessoriesTypeNames[
+                        avataaar.top.accessoriesType.index]),
                     onTranslateKey('accessories'),
                     'bowtie',
                     (index) {
@@ -231,7 +238,8 @@ class AvataaarGenerator extends StatelessWidget {
                       showMaterialScrollPicker<FacialHairType>(
                         context: context,
                         title: onTranslateKey('facial_hair_type'),
-                        transformer: (item) => onTranslateKey(facialHairTypeNames[item.index]),
+                        transformer: (item) =>
+                            onTranslateKey(facialHairTypeNames[item.index]),
                         items: FacialHairType.values,
                         selectedItem: avataaar.top.facialHair.facialHairType,
                         onChanged: (value) {
@@ -240,7 +248,8 @@ class AvataaarGenerator extends StatelessWidget {
                         },
                       );
                     },
-                    onTranslateKey(facialHairTypeNames[avataaar.top.facialHair.facialHairType.index]),
+                    onTranslateKey(facialHairTypeNames[
+                        avataaar.top.facialHair.facialHairType.index]),
                     onTranslateKey('facial_hair_type'),
                     'beard',
                     (index) {
@@ -251,7 +260,8 @@ class AvataaarGenerator extends StatelessWidget {
                   ),
                 //FacialHairColor
                 if (avataaar.top.topType != TopType.hijab &&
-                    avataaar.top.facialHair.facialHairType != FacialHairType.blank)
+                    avataaar.top.facialHair.facialHairType !=
+                        FacialHairType.blank)
                   typeBuilder(
                     context,
                     FacialHairColor.values
@@ -261,7 +271,8 @@ class AvataaarGenerator extends StatelessWidget {
                       showMaterialScrollPicker<FacialHairColor>(
                         context: context,
                         title: onTranslateKey('facial_hair_color'),
-                        transformer: (item) => onTranslateKey(facialHairColorNames[item.index]),
+                        transformer: (item) =>
+                            onTranslateKey(facialHairColorNames[item.index]),
                         items: FacialHairColor.values,
                         selectedItem: avataaar.top.facialHair.facialHairColor,
                         onChanged: (value) {
@@ -270,7 +281,8 @@ class AvataaarGenerator extends StatelessWidget {
                         },
                       );
                     },
-                    onTranslateKey(facialHairColorNames[avataaar.top.facialHair.facialHairColor.index]),
+                    onTranslateKey(facialHairColorNames[
+                        avataaar.top.facialHair.facialHairColor.index]),
                     onTranslateKey('facial_hair_color'),
                     'beard_color',
                     (index) {
@@ -289,7 +301,8 @@ class AvataaarGenerator extends StatelessWidget {
                     showMaterialScrollPicker<ClotheType>(
                       context: context,
                       title: onTranslateKey('clothes_type'),
-                      transformer: (item) => onTranslateKey(clotheTypeNames[item.index]),
+                      transformer: (item) =>
+                          onTranslateKey(clotheTypeNames[item.index]),
                       items: ClotheType.values,
                       selectedItem: avataaar.clothes.clotheType,
                       onChanged: (value) {
@@ -298,7 +311,8 @@ class AvataaarGenerator extends StatelessWidget {
                       },
                     );
                   },
-                  onTranslateKey(clotheTypeNames[avataaar.clothes.clotheType.index]),
+                  onTranslateKey(
+                      clotheTypeNames[avataaar.clothes.clotheType.index]),
                   onTranslateKey('clothes_type'),
                   'hawaiian-shirt',
                   (index) {
@@ -311,13 +325,14 @@ class AvataaarGenerator extends StatelessWidget {
                     avataaar.clothes.clotheType == ClotheType.blazerSweater))
                   typeBuilder(
                     context,
-                  ClotheColor.values.indexOf(avataaar.clothes.clotheColor),
-                  ClotheColor.values.length,
+                    ClotheColor.values.indexOf(avataaar.clothes.clotheColor),
+                    ClotheColor.values.length,
                     () {
                       showMaterialScrollPicker<ClotheColor>(
                         context: context,
                         title: onTranslateKey('clothes_color'),
-                        transformer: (item) => onTranslateKey(clotheColorNames[item.index]),
+                        transformer: (item) =>
+                            onTranslateKey(clotheColorNames[item.index]),
                         items: ClotheColor.values,
                         selectedItem: avataaar.clothes.clotheColor,
                         onChanged: (value) {
@@ -326,7 +341,8 @@ class AvataaarGenerator extends StatelessWidget {
                         },
                       );
                     },
-                    onTranslateKey(clotheColorNames[avataaar.clothes.clotheColor.index]),
+                    onTranslateKey(
+                        clotheColorNames[avataaar.clothes.clotheColor.index]),
                     onTranslateKey('clothes_color'),
                     'hawaiian-shirt_color',
                     (index) {
@@ -343,7 +359,8 @@ class AvataaarGenerator extends StatelessWidget {
                     showMaterialScrollPicker<EyeType>(
                       context: context,
                       title: onTranslateKey('eyes'),
-                      transformer: (item) => onTranslateKey(eyeTypeNames[item.index]),
+                      transformer: (item) =>
+                          onTranslateKey(eyeTypeNames[item.index]),
                       items: EyeType.values,
                       selectedItem: avataaar.eyes.eyeType,
                       onChanged: (value) {
@@ -369,7 +386,8 @@ class AvataaarGenerator extends StatelessWidget {
                     showMaterialScrollPicker<EyebrowType>(
                       context: context,
                       title: onTranslateKey('eyebrow'),
-                      transformer: (item) => onTranslateKey(eyebrowTypeNames[item.index]),
+                      transformer: (item) =>
+                          onTranslateKey(eyebrowTypeNames[item.index]),
                       items: EyebrowType.values,
                       selectedItem: avataaar.eyebrow.eyebrowType,
                       onChanged: (value) {
@@ -378,7 +396,8 @@ class AvataaarGenerator extends StatelessWidget {
                       },
                     );
                   },
-                  onTranslateKey(eyebrowTypeNames[avataaar.eyebrow.eyebrowType.index]),
+                  onTranslateKey(
+                      eyebrowTypeNames[avataaar.eyebrow.eyebrowType.index]),
                   onTranslateKey('eyebrow'),
                   'eyebrows',
                   (index) {
@@ -395,7 +414,8 @@ class AvataaarGenerator extends StatelessWidget {
                     showMaterialScrollPicker<MouthType>(
                       context: context,
                       title: onTranslateKey('mouth'),
-                      transformer: (item) => onTranslateKey(mouthTypeNames[item.index]),
+                      transformer: (item) =>
+                          onTranslateKey(mouthTypeNames[item.index]),
                       items: MouthType.values,
                       selectedItem: avataaar.mouth.mouthType,
                       onChanged: (value) {
@@ -404,7 +424,8 @@ class AvataaarGenerator extends StatelessWidget {
                       },
                     );
                   },
-                  onTranslateKey(mouthTypeNames[avataaar.mouth.mouthType.index]),
+                  onTranslateKey(
+                      mouthTypeNames[avataaar.mouth.mouthType.index]),
                   onTranslateKey('mouth'),
                   'mouth',
                   (index) {
@@ -421,7 +442,8 @@ class AvataaarGenerator extends StatelessWidget {
                     showMaterialScrollPicker<SkinColor>(
                       context: context,
                       title: onTranslateKey('skin'),
-                      transformer: (item) => onTranslateKey(skinColorNames[item.index]),
+                      transformer: (item) =>
+                          onTranslateKey(skinColorNames[item.index]),
                       items: SkinColor.values,
                       selectedItem: avataaar.skin.skinColor,
                       onChanged: (value) {
