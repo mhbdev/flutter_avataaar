@@ -12,6 +12,8 @@ class AvataaarGenerator extends StatelessWidget {
   final List<Color> colors;
   final Widget Function(
     BuildContext context,
+    int index,
+    int itemsCount,
     void Function() onTap,
     String currentSelected,
     String type,
@@ -95,6 +97,8 @@ class AvataaarGenerator extends StatelessWidget {
                 //TopType
                 typeBuilder(
                     context,
+                    TopType.values.indexOf(avataaar.top.topType),
+                    TopType.values.length,
                     () {
                       showMaterialScrollPicker<TopType>(
                         context: context,
@@ -133,6 +137,8 @@ class AvataaarGenerator extends StatelessWidget {
                     avataaar.top.topType == TopType.longHairShavedSides))
                   typeBuilder(
                     context,
+                    HairColor.values.indexOf(avataaar.top.hairColor),
+                    HairColor.values.length,
                     () {
                       showMaterialScrollPicker<HairColor>(
                         context: context,
@@ -166,6 +172,8 @@ class AvataaarGenerator extends StatelessWidget {
                     avataaar.top.topType == TopType.winterHat4))
                   typeBuilder(
                     context,
+                    HatColor.values.indexOf(avataaar.top.hatColor),
+                    HatColor.values.length,
                     () {
                       showMaterialScrollPicker<HatColor>(
                         context: context,
@@ -193,6 +201,9 @@ class AvataaarGenerator extends StatelessWidget {
                 if (avataaar.top.topType != TopType.eyepatch)
                   typeBuilder(
                     context,
+                    AccessoriesType.values
+                        .indexOf(avataaar.top.accessoriesType),
+                    AccessoriesType.values.length,
                     () {
                       showMaterialScrollPicker<AccessoriesType>(
                           context: context,
@@ -220,6 +231,9 @@ class AvataaarGenerator extends StatelessWidget {
                 if (avataaar.top.topType != TopType.hijab)
                   typeBuilder(
                     context,
+                    FacialHairType.values
+                        .indexOf(avataaar.top.facialHair.facialHairType),
+                    FacialHairType.values.length,
                     () {
                       showMaterialScrollPicker<FacialHairType>(
                         context: context,
@@ -250,6 +264,9 @@ class AvataaarGenerator extends StatelessWidget {
                         FacialHairType.blank)
                   typeBuilder(
                     context,
+                    FacialHairColor.values
+                        .indexOf(avataaar.top.facialHair.facialHairColor),
+                    FacialHairColor.values.length,
                     () {
                       showMaterialScrollPicker<FacialHairColor>(
                         context: context,
@@ -278,6 +295,8 @@ class AvataaarGenerator extends StatelessWidget {
                 //ClotheType
                 typeBuilder(
                   context,
+                  ClotheType.values.indexOf(avataaar.clothes.clotheType),
+                  ClotheType.values.length,
                   () {
                     showMaterialScrollPicker<ClotheType>(
                       context: context,
@@ -306,6 +325,8 @@ class AvataaarGenerator extends StatelessWidget {
                     avataaar.clothes.clotheType == ClotheType.blazerSweater))
                   typeBuilder(
                     context,
+                  ClotheColor.values.indexOf(avataaar.clothes.clotheColor),
+                  ClotheColor.values.length,
                     () {
                       showMaterialScrollPicker<ClotheColor>(
                         context: context,
@@ -332,6 +353,8 @@ class AvataaarGenerator extends StatelessWidget {
                 //Eyes
                 typeBuilder(
                   context,
+                  EyeType.values.indexOf(avataaar.eyes.eyeType),
+                  EyeType.values.length,
                   () {
                     showMaterialScrollPicker<EyeType>(
                       context: context,
@@ -357,6 +380,8 @@ class AvataaarGenerator extends StatelessWidget {
                 //EyesBrown
                 typeBuilder(
                   context,
+                  EyebrowType.values.indexOf(avataaar.eyebrow.eyebrowType),
+                  EyebrowType.values.length,
                   () {
                     showMaterialScrollPicker<EyebrowType>(
                       context: context,
@@ -383,6 +408,8 @@ class AvataaarGenerator extends StatelessWidget {
                 //Mouth
                 typeBuilder(
                   context,
+                  MouthType.values.indexOf(avataaar.mouth.mouthType),
+                  MouthType.values.length,
                   () {
                     showMaterialScrollPicker<MouthType>(
                       context: context,
@@ -409,6 +436,8 @@ class AvataaarGenerator extends StatelessWidget {
                 //Skin
                 typeBuilder(
                   context,
+                  SkinColor.values.indexOf(avataaar.skin.skinColor),
+                  SkinColor.values.length,
                   () {
                     showMaterialScrollPicker<SkinColor>(
                       context: context,
@@ -442,6 +471,8 @@ class AvataaarGenerator extends StatelessWidget {
   ///Used to build the types as a row
   Widget typeBuilder(
     BuildContext context,
+    int index,
+    int itemsCount,
     void Function() onTap,
     String currentSelected,
     String type,
@@ -449,8 +480,8 @@ class AvataaarGenerator extends StatelessWidget {
     ValueChanged<int> onUpdate,
   ) {
     if (sectionBuilder != null) {
-      return sectionBuilder!(
-          context, onTap, currentSelected, type, icon, onUpdate);
+      return sectionBuilder!(context, index, itemsCount, onTap, currentSelected,
+          type, icon, onUpdate);
     }
     return Row(
       children: [
