@@ -60,7 +60,7 @@ class Avataaar implements AvataaarPart {
 
   /// Generate a full random [Avataaar]. Could customize some values.
   Avataaar.random({
-    String proxyUrl,
+    String? proxyUrl,
     String? baseUrl,
     Top? top,
     Clothes? clothes,
