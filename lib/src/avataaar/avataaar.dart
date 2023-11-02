@@ -1,6 +1,6 @@
 library flutter_avataaar;
 
-import 'dart:convert' show json;
+import 'dart:convert' show base64Encode, json, utf8;
 import 'package:universal_io/io.dart';
 import 'dart:math';
 // import 'dart:typed_data';
@@ -20,6 +20,7 @@ import 'package:flutter_avataaar/flutter_avataaar.dart';
 ///Can generate a url using [toUrl] function as well as a png from svg [getPngFromSvg]
 
 class Avataaar implements AvataaarPart {
+  final String? proxyUrl;
   final String baseUrl;
   final Top top;
   final Clothes clothes;
@@ -32,6 +33,7 @@ class Avataaar implements AvataaarPart {
 
   Avataaar({
     this.baseUrl = AvataaarsApi.baseUrl,
+    this.proxyUrl,
     required this.top,
     required this.clothes,
     required this.eyes,
@@ -97,8 +99,10 @@ class Avataaar implements AvataaarPart {
   String toJson() => json.encode(toMap());
 
   ///Entries, which are necesary to generate the url
-  Iterable<MapEntry<String, String>> get _pieceEntries =>
-      pieces.expand((it) => it.pieces).where((it) => it != null).map(_splitEnum);
+  Iterable<MapEntry<String, String>> get _pieceEntries => pieces
+      .expand((it) => it.pieces)
+      .where((it) => it != null)
+      .map(_splitEnum);
 
   ///Split the enum in two parts to use the first one as the key of the parameter on the URL and the second as the value.
   MapEntry<String, String> _splitEnum<T>(T enumValue) {
@@ -117,7 +121,9 @@ class Avataaar implements AvataaarPart {
       final value = it.value[0].toUpperCase() + it.value.substring(1);
       return '$key=$value';
     }).join('&');
-    return '$baseUrl/?$params';
+    return proxyUrl != null
+        ? '$proxyUrl${base64Encode(utf8.encode('$baseUrl/?$params'))}'
+        : '$baseUrl/?$params';
   }
 
   /// Get a png [File] from the current avataaar and storage it on the provided paths.
@@ -201,7 +207,8 @@ class Avataaar implements AvataaarPart {
   static final Map<String, String> cachedUrls = {};
 
   ///Decode from json
-  static Avataaar fromJson(String value) => Avataaar.fromMap(json.decode(value));
+  static Avataaar fromJson(String value) =>
+      Avataaar.fromMap(json.decode(value));
 
   ///Transform from map to [Avataaar]
   factory Avataaar.fromMap(Map<String, dynamic> map) => Avataaar(
