@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_avataaar/src/avataaar/avataaar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_avataaar/src/helpers/hex_color.dart';
@@ -34,11 +36,13 @@ class AvataaarPicture extends StatelessWidget {
 
               // FROM API TO CHANGE BACKGROUND COLOR
               if (avatar.backgroundColor != AvataaarsApi.baseBackgroundColor) {
-                string = BackgroundColorHelper.getSvgWithBackground(string, avatar.backgroundColor);
+                string = BackgroundColorHelper.getSvgWithBackground(
+                    string, avatar.backgroundColor);
               }
               return SvgPicture.string(
                 string,
-                placeholderBuilder: (context) => placeholder ?? CircularProgressIndicator(),
+                placeholderBuilder: (context) =>
+                    placeholder ?? CircularProgressIndicator(),
               );
             } else if (snapshot.hasError) {
               return errorWidget ??
@@ -81,13 +85,13 @@ class AvataaarPicture extends StatelessWidget {
   }
 }
 
-
 class AvatarPicture extends StatelessWidget {
   final Widget Function(BuildContext context, String avataaar)? customBuilder;
   final String url;
   final Widget? placeholder;
   final Widget? errorWidget;
   final void Function(Exception exception)? onError;
+  final String? proxyUrl;
 
   const AvatarPicture.builder({
     Key? key,
@@ -95,21 +99,25 @@ class AvatarPicture extends StatelessWidget {
     this.placeholder,
     this.errorWidget,
     this.onError,
+    this.proxyUrl,
     required this.url,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return customBuilder?.call(context, url) ??
+    final finalUrl =
+        proxyUrl != null ? '$proxyUrl${base64Encode(utf8.encode(url))}' : url;
+    return customBuilder?.call(context, finalUrl) ??
         FutureBuilder<String>(
-          future: fetchSvg(url),
+          future: fetchSvg(finalUrl),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               var string = snapshot.data!;
 
               return SvgPicture.string(
                 string,
-                placeholderBuilder: (context) => placeholder ?? const CircularProgressIndicator(),
+                placeholderBuilder: (context) =>
+                    placeholder ?? const CircularProgressIndicator(),
               );
             } else if (snapshot.hasError) {
               return errorWidget ??
